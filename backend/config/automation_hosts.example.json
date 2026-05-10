@@ -1,0 +1,17 @@
+{
+  "hosts": {
+    "192.168.68.72": {
+      "method": "ssh",
+      "host": "192.168.68.72",
+      "user": "root",
+      "identity_file": "C:\\Users\\bratsu\\.ssh\\id_ed25519_proxmox_media"
+    },
+    "192.168.68.71": {
+      "method": "proxmox_lxc",
+      "container_id": 114,
+      "proxmox_host": "192.168.68.72",
+      "proxmox_user": "root",
+      "proxmox_identity_file": "C:\\Users\\bratsu\\.ssh\\id_ed25519_proxmox_media"
+    }
+  }
+}

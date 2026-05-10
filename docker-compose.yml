@@ -1,0 +1,33 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: netops-command-center-api
+    restart: unless-stopped
+    environment:
+      APP_NAME: NetOps Command Center
+      ENVIRONMENT: production
+      DATABASE_URL: sqlite:////app/data/netops.db
+      CORS_ORIGINS: http://localhost:8080,http://127.0.0.1:8080
+      SCHEDULER_ENABLED: "true"
+      HEALTH_CHECK_INTERVAL_SECONDS: "300"
+      AI_ENABLED: "false"
+      OLLAMA_BASE_URL: http://host.docker.internal:11434
+      OLLAMA_MODEL: llama3.1
+    volumes:
+      - netops_data:/app/data
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: netops-command-center-web
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "8080:80"
+
+volumes:
+  netops_data:

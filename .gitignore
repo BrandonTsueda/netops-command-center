@@ -1,0 +1,13 @@
+.env
+*.db
+*.sqlite
+__pycache__/
+.pytest_cache/
+.venv/
+data/
+node_modules/
+dist/
+build/
+*.tsbuildinfo
+backend/config/automation_hosts.local.json
+.DS_Store
