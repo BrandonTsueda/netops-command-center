@@ -118,6 +118,8 @@ The Compose deployment enables scheduled checks every 300 seconds by default. Lo
 | `GET` | `/api/v1/devices/{device_id}` | Get one device |
 | `PUT` | `/api/v1/devices/{device_id}` | Update device |
 | `DELETE` | `/api/v1/devices/{device_id}` | Delete device |
+| `GET` | `/api/v1/devices/export.csv` | Export inventory as CSV |
+| `GET` | `/api/v1/devices/export.json` | Export inventory as JSON |
 | `POST` | `/api/v1/devices/{device_id}/run-checks` | Run checks for one device |
 | `GET` | `/api/v1/health-checks` | List check history |
 | `POST` | `/api/v1/health-checks/run` | Run checks for active fleet |
@@ -159,6 +161,13 @@ Run checks:
 Invoke-RestMethod -Method Post -Uri "http://127.0.0.1:8000/api/v1/health-checks/run"
 ```
 
+Export the inventory:
+
+```powershell
+Invoke-WebRequest "http://127.0.0.1:8000/api/v1/devices/export.csv" -OutFile ".\netops-inventory.csv"
+Invoke-RestMethod "http://127.0.0.1:8000/api/v1/devices/export.json"
+```
+
 Export the report:
 
 ```powershell
@@ -183,6 +192,16 @@ Total source devices: 20
 ```
 
 The current local inventory also includes Brandon's mini PC, bringing the active lab inventory to 21 devices.
+
+## Source-Of-Truth Workflow
+
+NetOps is intended to become the operational source of truth for the homelab:
+
+1. Import or add devices with role, site, platform, tags, ports, URLs, SSH state, and notes.
+2. Run fleet checks to keep current status attached to inventory instead of scattered notes.
+3. Use drift events and incidents to track what changed and what needs follow-up.
+4. Export CSV/JSON inventory before major maintenance, rebuilds, or documentation updates.
+5. Keep secrets outside the repo in SSH agent, `.env`, or local host mapping files.
 
 ## Optional Ollama Summary
 

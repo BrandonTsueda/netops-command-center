@@ -161,6 +161,10 @@ function App() {
           <h1>NetOps Command Center</h1>
         </div>
         <div className="topbar-actions">
+          <a className="secondary button-link" href="/api/v1/devices/export.csv" target="_blank" rel="noreferrer">
+            <FileText size={18} />
+            Export CSV
+          </a>
           <button className="secondary" onClick={runChecks} disabled={busy}>
             <RefreshCw size={18} />
             Check
@@ -173,6 +177,18 @@ function App() {
       </header>
 
       {error && <div className="alert">{error}</div>}
+
+      <section className="source-strip">
+        <div>
+          <p className="eyebrow">Source Of Truth</p>
+          <h2>Track devices, checks, incidents, automation runs, and exports from one local command surface.</h2>
+        </div>
+        <div className="source-actions">
+          <a href="/api/v1/devices/export.json" target="_blank" rel="noreferrer">JSON inventory</a>
+          <a href="/api/v1/reports/morning.md" target="_blank" rel="noreferrer">Morning report</a>
+          <a href="/api/v1/automation/runs?limit=100" target="_blank" rel="noreferrer">Automation history</a>
+        </div>
+      </section>
 
       <section className="metrics">
         <div className="metric total">

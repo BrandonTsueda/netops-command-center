@@ -77,3 +77,27 @@ def test_automation_runs_list_is_empty_initially() -> None:
     payload = response.json()
     assert payload["items"] == []
     assert payload["total"] == 0
+
+
+def test_device_inventory_exports() -> None:
+    payload = {
+        "hostname": "mini-pc-01",
+        "ip_address": "192.168.68.65",
+        "role": "mini-pc",
+        "site": "home-lab",
+        "tags": ["lab", "edge"],
+        "connection_type": "icmp",
+        "tcp_ports": [22],
+        "ssh_enabled": True,
+    }
+    created = client.post("/api/v1/devices", json=payload)
+    assert created.status_code == 201
+
+    json_export = client.get("/api/v1/devices/export.json")
+    assert json_export.status_code == 200
+    assert json_export.json()["total"] == 1
+
+    csv_export = client.get("/api/v1/devices/export.csv")
+    assert csv_export.status_code == 200
+    assert "mini-pc-01" in csv_export.text
+    assert "netops-inventory.csv" in csv_export.headers["content-disposition"]
